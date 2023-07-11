@@ -47,13 +47,13 @@ while True :
 #int(table[0][0].split('_')[0][1:])
 
 # selector 정의
-table_manage='#style-1 > div.v-list.v-list--dense.v-list--subheader.theme--light > div:nth-child(4) > div > div'
+table_manage='#style-1 > div.v-list.v-list--dense.v-list--subheader.theme--light > div:nth-child(5) > div.v-list__group__header > div:nth-child(2) > div > div > div'
 drop_down='#app > div.application--wrap > main > div > div > div > nav > div > div:nth-child(3) > div > div.v-input__slot > div.v-select__slot > div.v-input__append-inner > div > i'
 mid1='#app > div.v-menu__content.theme--light.menuable__content__active > div > div > div.primary--text > a > div > div'
 mid2='#app > div.v-menu__content.theme--light.menuable__content__active > div > div > div:nth-child(2) > a > div > div'
 
-load='#app > div.application--wrap > main > div > div > div > nav > div > button.mb-2.v-btn.theme--dark.purple'
-create='#app > div.application--wrap > main > div > div > div > nav > div > button.mb-2.v-btn.theme--dark.primary
+tag_load='#app > div.application--wrap > main > div > div > div > nav > div > button.mb-2.v-btn.theme--dark.purple'
+tag_create='#app > div.application--wrap > main > div > div > div > nav > div > button.mb-2.v-btn.theme--dark.primary'
 tag_inputbox='#app > div.application--wrap > main > div > div > div > nav > div > div:nth-child(7) > div > div.v-input__slot > div > input[type=text]'
 
 ##################### 크롤링 시작 #####################
@@ -67,25 +67,32 @@ time.sleep(0.5) #페이지 이동 기다려줌
 
 drop=driver.find_element(By.CSS_SELECTOR, drop_down)
 
-inputbox=driver.find_element(By.CSS_SELECTOR,tag_inputbox)
-inputbox.clear()                    #입력창 내용을 지우고
-inputbox.send_keys('')              #입력창에 내용을 입력함
-
-
-k=2
-t=0
+k=1 #드롭다운 iter
+t=0 #mid list iter
 while True :
     try :
         drop.click()
-        time.sleep(0.3) #dropdown 내려오는거 기다림
+        time.sleep(2) #dropdown 내려오는거 기다림
         target=driver.find_element(By.CSS_SELECTOR, mid(k))
         target_mid=int(target.text.split('/')[0])
-        #mid   :   int(driver.find_element(By.CSS_SELECTOR, mid(k)).text.split('/')[0])
+        target.click()
 
-
-        k+=1
+        inputbox=driver.find_element(By.CSS_SELECTOR,tag_inputbox)
+        load=driver.find_element(By.CSS_SELECTOR,tag_load)
+        create=driver.find_element(By.CSS_SELECTOR,tag_create)
         
+        k+=1
 
+        while True:
+            if tmid[t]==target_mid:
+                inputbox.clear()                    #입력창 내용을 지우고
+                inputbox.send_keys(table[t][0])     #입력창에 내용을 입력함
+                load.click()                        #로드버튼을 누르고
+                time.sleep(1)
+                create.click()                      #테이블생성 버튼을 누른다.
+                time.sleep(1)
+
+                t+=1             
     except :
         break
 
