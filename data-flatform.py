@@ -69,9 +69,10 @@ time.sleep(0.5) #페이지 이동 기다려줌
 
 drop=driver.find_element(By.CSS_SELECTOR, drop_down)
 
+#투포인터 알고리즘
 k=1 #드롭다운 iter
 t=0 #mid list iter
-while True :
+while True :    
     try :
         drop.click()
         time.sleep(0.3) #dropdown 내려오는거 기다림
@@ -94,13 +95,16 @@ while True :
         while True:
             if tmid[t]==target_mid:
                 inputbox.clear()                    #입력창 내용을 지우고
+                time.sleep(0.5)
                 inputbox.send_keys(table[t][0])     #입력창에 내용을 입력함
                 load.click()                        #로드버튼을 누르고
-                time.sleep(1)
+                time.sleep(0.5)
                 create.click()                      #테이블생성 버튼을 누른다.
-                time.sleep(1)
+                time.sleep(0.5)
 
-                t+=1             
+                t+=1
+            else :
+                break
     except :
         break
 
