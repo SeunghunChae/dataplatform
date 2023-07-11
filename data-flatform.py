@@ -72,17 +72,23 @@ t=0 #mid list iter
 while True :
     try :
         drop.click()
-        time.sleep(2) #dropdown 내려오는거 기다림
+        time.sleep(0.3) #dropdown 내려오는거 기다림
         target=driver.find_element(By.CSS_SELECTOR, mid(k))
         target_mid=int(target.text.split('/')[0])
         target.click()
+        time.sleep(0.3)
 
+        #버튼 드라이버 변수 설정
         inputbox=driver.find_element(By.CSS_SELECTOR,tag_inputbox)
         load=driver.find_element(By.CSS_SELECTOR,tag_load)
         create=driver.find_element(By.CSS_SELECTOR,tag_create)
         
         k+=1
 
+        #드롭다운과 테이블명의 mid를 비교한 후 클릭을 수행한다.
+        #table : 입력할 테이블명
+        #tmid : 테이블 명 내의 mid
+        #target_mid : 드롭다운 내의 mid
         while True:
             if tmid[t]==target_mid:
                 inputbox.clear()                    #입력창 내용을 지우고
