@@ -18,6 +18,8 @@ import chromedriver_autoinstaller
 
 import traceback
 
+#implicit wait이 안먹어서 while루프를 돌면서 태그가 뜰때까지 기다리게 만든 함수
+#exception을 회피하기 위해 만듦
 def is_element_present(driver, by, value):
     try:
         driver.find_element(by=by, value=value)
@@ -102,9 +104,3 @@ while True :
     except :
         break
 
-
-'''
-while True :
-    print(driver.find_element(By.CSS_SELECTOR, mid(k)).text.split('/')[0])
-    k+=1
-'''
