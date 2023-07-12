@@ -69,7 +69,7 @@ url='http://dpdbtooltest.koscom.co.kr/'
 
 options = Options()
 options.add_argument('--disable-gpu')
-options.add_argument('--headless')
+#options.add_argument('--headless')
 driver = webdriver.Chrome(options=options) 
  
 driver.get(url)
@@ -105,20 +105,22 @@ while True :
             if tmid[t]==target_mid:
                 #inputbox.clear()가 잘 안먹어서 자바스크립트로 강제로 입력
                 driver.execute_script(js_inputbox+"''")
+                print(table[t][0]+'을 입력할것이에요')
                 driver.execute_script(js_inputbox+"'"+table[t][0]+"'")
                 time.sleep(1)
                 load.click()                        #로드버튼을 누르고
                 time.sleep(1)
                 create.click()                      #테이블생성 버튼을 누른다.
                 time.sleep(1)
-
-                t+=1
-                print(table[t][0]+' 테이블 입력 성공하셨습니다. k: '+str(k)+'t : '+str(t)+'\n')
-
+                                
                 #alert 창 닫기.
                 window=Alert(driver)
+                text=window.text
+                print(table[t][0]+' '+text+' k: '+str(k)+', t : '+str(t)+'\n')
                 window.dismiss()
                 time.sleep(0.5)
+                
+                t+=1
             else :
                 break
             
@@ -127,4 +129,3 @@ while True :
     except :
         print('k : '+str(k)+'t : '+str(t)+'에서 에러남\n')
         break
-
