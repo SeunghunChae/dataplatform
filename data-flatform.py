@@ -85,9 +85,7 @@ while True :
         inputbox=driver.find_element(By.CSS_SELECTOR,tag_inputbox)
         load=driver.find_element(By.CSS_SELECTOR,tag_load)
         create=driver.find_element(By.CSS_SELECTOR,tag_create)
-        
-        k+=1
-
+               
         #드롭다운과 테이블명의 mid를 비교한 후 클릭을 수행한다.
         #table : 입력할 테이블명
         #tmid : 테이블 명 내의 mid
@@ -105,6 +103,10 @@ while True :
                 t+=1
             else :
                 break
+            
+        k+=1
+        
     except :
+        print('k : '+str(k)+'t : '+str(t)+'에서 에러남\n')
         break
 
