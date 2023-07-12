@@ -34,6 +34,13 @@ def is_element_present(driver, by, value):
 def mid(k):
     return '#app > div.v-menu__content.theme--light.menuable__content__active > div > div > div:nth-child('+str(k)+') > a > div > div'
 
+def isalert():
+    try:
+        alert = driver.switch_to.alert
+        alert.dismiss()
+    except:
+        return
+    return
 
 table=[]
 tmid=[]
@@ -92,9 +99,11 @@ while True :
         target.click()
         time.sleep(0.3)
 
+        isalert()   #alert 창 끔
+        
         #버튼 드라이버 변수 설정
-        inputbox=driver.find_element(By.CSS_SELECTOR,tag_inputbox)
-        load=driver.find_element(By.CSS_SELECTOR,tag_load)
+        inputbox=driver.find_element(By.CSS_SELECTOR,tag_inputbox)              
+        load=driver.find_element(By.CSS_SELECTOR,tag_load) #충분히 기다리지 않으면 여기서 뻗는다.        
         create=driver.find_element(By.CSS_SELECTOR,tag_create)
                
         #드롭다운과 테이블명의 mid를 비교한 후 클릭을 수행한다.
@@ -103,10 +112,11 @@ while True :
         #target_mid : 드롭다운 내의 mid
         while True:
             if tmid[t]==target_mid:
+                print(table[t][0]+' 테이블을 생성합니다.')
                 #inputbox.clear()가 잘 안먹어서 자바스크립트로 강제로 입력
                 driver.execute_script(js_inputbox+"''")
-                print(table[t][0]+'을 입력할것이에요')
-                driver.execute_script(js_inputbox+"'"+table[t][0]+"'")
+                jscode=js_inputbox+"'"+table[t][0]+"'"
+                driver.execute_script(jscode)
                 time.sleep(1)
                 load.click()                        #로드버튼을 누르고
                 time.sleep(1)
@@ -119,13 +129,14 @@ while True :
                 print(table[t][0]+' '+text+' k: '+str(k)+', t : '+str(t)+'\n')
                 window.dismiss()
                 time.sleep(0.5)
-                
                 t+=1
             else :
                 break
             
         k+=1
-        
+
+    
     except :
-        print('k : '+str(k)+'t : '+str(t)+'에서 에러남\n')
+        print('k : '+str(k)+', t : '+str(t)+'에서 에러남\n')
         break
+
