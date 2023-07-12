@@ -7,10 +7,13 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.alert import Alert       #alert 창 제어 모듈
 from selenium.webdriver.chrome.options import Options   #headless
 from bs4 import BeautifulSoup
+from selenium.webdriver.common.action_chains import ActionChains
 
 from datetime import datetime
 
 import re
+
+import sys
 
 import requests
 
@@ -88,12 +91,15 @@ time.sleep(1) #페이지 이동 기다려줌
 drop=driver.find_element(By.CSS_SELECTOR, drop_down)
 
 #투포인터 알고리즘
-k=1 #드롭다운 iter
-t=0 #mid list iter
+k=60 #드롭다운 iter
+t=36 #mid list iter
 while True :    
     try :
         drop.click()
-        time.sleep(0.3) #dropdown 내려오는거 기다림
+        time.sleep(0.5)                                 #dropdown 내려오는거 기다림
+        action = ActionChains(driver)
+        for i in range(120):
+            action.send_keys(Keys.ARROW_DOWN).perform()     #스크롤링
         target=driver.find_element(By.CSS_SELECTOR, mid(k))
         target_mid=int(target.text.split('/')[0])
         target.click()
@@ -138,5 +144,6 @@ while True :
     
     except :
         print('k : '+str(k)+', t : '+str(t)+'에서 에러남\n')
+        url=traceback.print_exc()
+        print(url)
         break
-
