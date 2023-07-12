@@ -18,8 +18,10 @@ import chromedriver_autoinstaller
 
 import traceback
 
-#implicit wait이 안먹어서 while루프를 돌면서 태그가 뜰때까지 기다리게 만든 함수
-#exception을 회피하기 위해 만듦
+#implicit wait이 안먹어서 while루프를 돌면서 태그가 뜰때까지 기다리게 만든 함수. exception을 회피하기 위해 만듦
+#implicit wait : 태그가 생길때까지 기다려줌. time.sleep()보다 조금 더 좋으나 이상하게 작동 안할 때가 많음. 다음과 같이 사용한다.
+#wait = WebDriverWait(driver, 10)
+#table = wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, tab_name)))
 def is_element_present(driver, by, value):
     try:
         driver.find_element(by=by, value=value)
@@ -65,7 +67,7 @@ driver.get(url)
 
 time.sleep(1) #로그인 기다려줌
 driver.find_element(By.CSS_SELECTOR, table_manage).click()
-time.sleep(0.5) #페이지 이동 기다려줌
+time.sleep(1) #페이지 이동 기다려줌
 
 drop=driver.find_element(By.CSS_SELECTOR, drop_down)
 
