@@ -103,6 +103,7 @@ while True :
                 time.sleep(0.5)
 
                 t+=1
+                print(table[t][0]+' 테이블 입력 성공하셨습니다. k: '+str(k)+'t : '+str(t)+'\n')
             else :
                 break
             
