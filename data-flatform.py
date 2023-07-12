@@ -4,6 +4,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.alert import Alert       #alert 창 제어 모듈
+from selenium.webdriver.chrome.options import Options   #headless
 from bs4 import BeautifulSoup
 
 from datetime import datetime
@@ -60,9 +62,16 @@ tag_load='#app > div.application--wrap > main > div > div > div > nav > div > bu
 tag_create='#app > div.application--wrap > main > div > div > div > nav > div > button.mb-2.v-btn.theme--dark.primary'
 tag_inputbox='#app > div.application--wrap > main > div > div > div > nav > div > div:nth-child(7) > div > div.v-input__slot > div > input[type=text]'
 
+js_inputbox="document.querySelector(\"#app > div.application--wrap > main > div > div > div > nav > div > div:nth-child(7) > div > div.v-input__slot > div > input[type=text]\").value="
+
 ##################### 크롤링 시작 #####################
 url='http://dpdbtooltest.koscom.co.kr/'
-driver = webdriver.Chrome()
+
+options = Options()
+options.add_argument('--disable-gpu')
+options.add_argument('--headless')
+driver = webdriver.Chrome(options=options) 
+ 
 driver.get(url)
 
 time.sleep(1) #로그인 기다려줌
@@ -94,16 +103,22 @@ while True :
         #target_mid : 드롭다운 내의 mid
         while True:
             if tmid[t]==target_mid:
-                inputbox.clear()                    #입력창 내용을 지우고
-                time.sleep(0.5)
-                inputbox.send_keys(table[t][0])     #입력창에 내용을 입력함
+                #inputbox.clear()가 잘 안먹어서 자바스크립트로 강제로 입력
+                driver.execute_script(js_inputbox+"''")
+                driver.execute_script(js_inputbox+"'"+table[t][0]+"'")
+                time.sleep(1)
                 load.click()                        #로드버튼을 누르고
-                time.sleep(0.5)
+                time.sleep(1)
                 create.click()                      #테이블생성 버튼을 누른다.
-                time.sleep(0.5)
+                time.sleep(1)
 
                 t+=1
                 print(table[t][0]+' 테이블 입력 성공하셨습니다. k: '+str(k)+'t : '+str(t)+'\n')
+
+                #alert 창 닫기.
+                window=Alert(driver)
+                window.dismiss()
+                time.sleep(0.5)
             else :
                 break
             
