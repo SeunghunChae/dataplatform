@@ -91,15 +91,17 @@ time.sleep(1) #페이지 이동 기다려줌
 drop=driver.find_element(By.CSS_SELECTOR, drop_down)
 
 #투포인터 알고리즘
-k=60 #드롭다운 iter
-t=36 #mid list iter
+k=70 #드롭다운 iter
+t=42 #mid list iter
 while True :    
     try :
         drop.click()
+        print(1)
         time.sleep(0.5)                                 #dropdown 내려오는거 기다림
         action = ActionChains(driver)
-        for i in range(120):
+        for i in range(195-t):
             action.send_keys(Keys.ARROW_DOWN).perform()     #스크롤링
+        time.sleep(0.3)
         target=driver.find_element(By.CSS_SELECTOR, mid(k))
         target_mid=int(target.text.split('/')[0])
         target.click()
